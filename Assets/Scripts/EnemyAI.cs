@@ -9,12 +9,15 @@ public class EnemyAI : MonoBehaviour
     private float CurrentHealth;
 
     private NavMeshAgent nma;
+    private NavMeshObstacle navMeshObstacle;
     private GameObject playerGO;
     private Animator lb_animator, ub_animator;
 
     private void Awake()
     {
         nma = GetComponent<NavMeshAgent>();
+        navMeshObstacle = GetComponent<NavMeshObstacle>();
+        navMeshObstacle.enabled = false;
         lb_animator = transform.Find("LowerBody").GetComponentInChildren<Animator>();
         ub_animator = transform.Find("UpperBody").GetComponentInChildren<Animator>();
         playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -25,11 +28,23 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!nma.pathPending)
+        //purkka koska stopping distance ei toimi >:C
+        if(Vector3.Distance(transform.position, playerGO.transform.position) <= 15)
+        {
+            nma.enabled = false;
+            navMeshObstacle.enabled = true;
+        }
+        else
+        {
+            navMeshObstacle.enabled = false;
+            nma.enabled = true;
+        }
+
+        if(nma.enabled == true && !nma.pathPending)
             nma.SetDestination(playerGO.transform.position);
 
         
-        if(nma.velocity.magnitude > 0f)
+        if(nma.enabled == true && nma.velocity.magnitude > 0f)
         {
             lb_animator.SetBool("walking", true);
         }
@@ -38,7 +53,7 @@ public class EnemyAI : MonoBehaviour
             lb_animator.SetBool("walking", false);
         }
 
-        if(Vector3.Distance(transform.position, playerGO.transform.position) <= nma.stoppingDistance +2f)
+        if(nma.enabled == false || Vector3.Distance(transform.position, playerGO.transform.position) <= nma.stoppingDistance +2f)
             Bite();
     }
 
@@ -52,6 +67,7 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         CurrentHealth -= dmg;
+        print("took " + dmg + "dmg");
         if(CurrentHealth <= 0f)
             Die();
 

@@ -38,7 +38,7 @@ public class BulletSpawner : MonoBehaviour
             for(int i = 0; i < 5; i++)
             {
                 Quaternion rot = transform.rotation;
-                rot = Quaternion.Euler(rot.eulerAngles.x, Random.Range(rot.eulerAngles.y - 10f, rot.eulerAngles.y + 10f), rot.eulerAngles.z);
+                rot = Quaternion.Euler(rot.eulerAngles.x, Random.Range(rot.eulerAngles.y - 15f, rot.eulerAngles.y + 15f), rot.eulerAngles.z);
                 Instantiate(w.bulletPrefab, transform.position, rot).GetComponent<BulletController>().SetParams(bulletSpeed, 5f, w.damage);
             }  
             audioSource.PlayOneShot(w.audio);

@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294138a2392c67c4681423f11620568b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  criticalArea: 0
 --- !u!114 &3180156348998545922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9380,6 +9381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294138a2392c67c4681423f11620568b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  criticalArea: 1
 --- !u!1 &3180156349242401086
 GameObject:
   m_ObjectHideFlags: 0
@@ -9505,6 +9507,7 @@ GameObject:
   - component: {fileID: 3180156349272251784}
   - component: {fileID: 3180156349272251785}
   - component: {fileID: 3180156349272251786}
+  - component: {fileID: 1446533800}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -9563,6 +9566,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 100
+--- !u!208 &1446533800
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3180156349272251791}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.41, y: 1.77, z: 3.595}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3180156349377373200
 GameObject:
   m_ObjectHideFlags: 0

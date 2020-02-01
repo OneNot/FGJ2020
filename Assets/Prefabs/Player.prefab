@@ -377,7 +377,7 @@ MonoBehaviour:
     bulletPrefab: {fileID: 1251846748687091449, guid: 623ed70f6a587e446a5d3f310eae8fd7,
       type: 3}
     maxFirerate: 10
-    damage: 3
+    damage: 5
 --- !u!82 &1257533515004796252
 AudioSource:
   m_ObjectHideFlags: 0

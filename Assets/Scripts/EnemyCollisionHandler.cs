@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyCollisionHandler : MonoBehaviour
 {
+    public bool criticalArea;
     private EnemyAI parent;
 
     private void Awake()
@@ -13,7 +14,7 @@ public class EnemyCollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        parent.TakeDamage(other.gameObject.GetComponent<BulletController>().dmg);
+        parent.TakeDamage(other.gameObject.GetComponent<BulletController>().dmg * (criticalArea ? 2 : 1));
         Destroy(other.gameObject);
     }
 }
