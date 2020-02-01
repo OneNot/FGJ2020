@@ -5,11 +5,13 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     private float speed, lifetime, birthtime;
+    public float dmg {get; private set;}
 
-    public void SetParams(float _speed, float _lifetime)
+    public void SetParams(float _speed, float _lifetime, float _dmg)
     {
         speed = _speed;
         lifetime = _lifetime;
+        dmg = _dmg;
     }
 
     private void Start()
@@ -24,5 +26,10 @@ public class BulletController : MonoBehaviour
 
         if(Time.realtimeSinceStartup - birthtime > lifetime)
             Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        transform.forward = Vector3.Reflect(transform.forward, other.GetContact(0).normal);
     }
 }

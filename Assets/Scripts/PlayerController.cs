@@ -22,10 +22,11 @@ public class PlayerController : MonoBehaviour
         Empty,
         Melee,
         Pistol,
-        Shotgun
+        Shotgun,
+        Rifle
     }
 
-    public static UpperBodyModes UpperBodyMode {get; private set;}
+    private UpperBodyModes UpperBodyMode;
 
     private BulletSpawner bulletSpawner;
 
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
         WeaponSwitchChecks();
         Move(moveInput, shouldRun);
-        WalkingAnimationChecks(moveInput.magnitude, shouldRun);
+        AnimationChecks(moveInput.magnitude, shouldRun);
         LookAim(moveInput);
         WeaponFireChecks();
     }
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         cc.Move(((input * MoveSpeed * (run ? 2 : 1)) + Vector3.down * (GravityOn && !cc.isGrounded ? 9.81f : 0f)) * Time.deltaTime);
     }
-    private void WalkingAnimationChecks(float movementSpeed, bool run)
+    private void AnimationChecks(float movementSpeed, bool run)
     {
         float upperY = upperBody.rotation.eulerAngles.y;
         float lowerY = lowerBody.rotation.eulerAngles.y;
@@ -141,50 +142,60 @@ public class PlayerController : MonoBehaviour
             PrevWeapon();
         
         if(Input.GetButtonDown("weapon1"))
-            UpperBodyMode = UpperBodyModes.Empty;
+            ChangeUpperBodyMode(UpperBodyModes.Empty);
         else if(Input.GetButtonDown("weapon2"))
-            UpperBodyMode = UpperBodyModes.Melee;
+            ChangeUpperBodyMode(UpperBodyModes.Melee);
         else if(Input.GetButtonDown("weapon3"))
-            UpperBodyMode = UpperBodyModes.Pistol;
+            ChangeUpperBodyMode(UpperBodyModes.Pistol);
         else if(Input.GetButtonDown("weapon4"))
-            UpperBodyMode = UpperBodyModes.Shotgun;
+            ChangeUpperBodyMode(UpperBodyModes.Shotgun);
+        else if(Input.GetButtonDown("weapon5"))
+            ChangeUpperBodyMode(UpperBodyModes.Rifle);
     }
     private void WeaponFireChecks()
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            switch(UpperBodyMode)
-            {
-                case UpperBodyModes.Melee:
-                {
-                    if(!ub_animator.GetBool("ActionInProgress"))
-                        ub_animator.SetTrigger("melee_attack");
-                    break;
-                }
-                case UpperBodyModes.Pistol:
-                {
-                    bulletSpawner.Shoot();
-                    break;
-                }
-            }
+            if(UpperBodyMode == UpperBodyModes.Melee && !ub_animator.GetBool("ActionInProgress"))
+                ub_animator.SetTrigger("melee_attack");
+            else if(UpperBodyMode == UpperBodyModes.Rifle)
+                bulletSpawner.StartRepeatingFire();
+            else
+                bulletSpawner.Shoot(UpperBodyMode);
         }
+        if(Input.GetButtonUp("Fire1"))
+            bulletSpawner.EndRepeatingFire();
+
     }
 
     private void NextWeapon()
     {
         //if last mode
-        if(UpperBodyMode == UpperBodyModes.Shotgun)
-            UpperBodyMode = UpperBodyModes.Empty; //first mode
+        if(UpperBodyMode == UpperBodyModes.Rifle)
+            ChangeUpperBodyMode(UpperBodyModes.Empty); //first mode
         else
-            UpperBodyMode++; //next mode
+            ChangeUpperBodyMode(UpperBodyMode + 1); //next mode
     }
     private void PrevWeapon()
     {
         //if first mode
         if(UpperBodyMode == UpperBodyModes.Empty)
-            UpperBodyMode = UpperBodyModes.Shotgun; //last mode
+            ChangeUpperBodyMode(UpperBodyModes.Rifle); //last mode
         else
-            UpperBodyMode--; //prev mode
+            ChangeUpperBodyMode(UpperBodyMode - 1); //prev mode
     }
 
+    private void ChangeUpperBodyMode(UpperBodyModes mode)
+    {
+        if(mode != UpperBodyModes.Rifle)
+            bulletSpawner.EndRepeatingFire();
+
+        UpperBodyMode = mode;
+        if(mode == UpperBodyModes.Pistol)
+            bulletSpawner.transform.localPosition = new Vector3(0.2f, 0f, 11.5f);
+        else if(mode == UpperBodyModes.Shotgun)
+            bulletSpawner.transform.localPosition = new Vector3(1.7f, 0f, 11f);
+        else if(mode == UpperBodyModes.Rifle)
+            bulletSpawner.transform.localPosition = new Vector3(1.6f, 0f, 12.1f);
+    }
 }
