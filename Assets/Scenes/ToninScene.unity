@@ -609,6 +609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1561338027}
   - component: {fileID: 1561338026}
+  - component: {fileID: 1561338028}
   m_Layer: 8
   m_Name: ub_sprite
   m_TagString: Untagged
@@ -680,6 +681,25 @@ Transform:
   m_Father: {fileID: 1242881632}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!95 &1561338028
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561338025}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2c94314b76f7984195c6f69d553c8f3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!43 &1653470967
 Mesh:
   m_ObjectHideFlags: 0
@@ -876,6 +896,7 @@ MonoBehaviour:
   MoveSpeed: 30
   CanRun: 1
   GravityOn: 1
+  upperBodyMode: 0
 --- !u!4 &1692892798
 Transform:
   m_ObjectHideFlags: 0

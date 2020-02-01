@@ -14,8 +14,17 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer lowerBodySR;
     private CharacterController cc;
 
-    private Animator lb_animator;
+    private Animator lb_animator, ub_animator;
     private float animationBaseSpeed;
+
+    public enum UpperBodyMode
+    {
+        Empty,
+        Melee,
+        Pistol,
+        Shotgun
+    }
+    public UpperBodyMode upperBodyMode;
 
     // Start is called before the first frame update
     void Awake()
@@ -23,6 +32,7 @@ public class PlayerController : MonoBehaviour
         upperBody = transform.Find("UpperBody");
         lowerBody = transform.Find("LowerBody");
         lb_animator = lowerBody.GetComponentInChildren<Animator>();
+        ub_animator = upperBody.GetComponentInChildren<Animator>();
         lowerBodySR = lb_animator.transform.GetComponent<SpriteRenderer>();
         cc = GetComponent<CharacterController>();
         lb_animator.SetInteger("walk", 0);
@@ -83,6 +93,9 @@ public class PlayerController : MonoBehaviour
         }
         else
             lb_animator.SetInteger("walk", 1); //walking forwards  3: right
+
+        // if(upperBodyMode == UpperBodyMode.Empty)
+
     }
 
     private void LookAim(Vector3 input)
@@ -91,7 +104,17 @@ public class PlayerController : MonoBehaviour
         point = new Vector3(point.x, transform.position.y, point.z);
 
         Debug.DrawLine(Camera.main.transform.position, point, Color.red, 1f);
-        upperBody.transform.LookAt(point);
-        lowerBody.transform.LookAt(lowerBody.transform.position + input);
+
+        
+        if(upperBodyMode == UpperBodyMode.Empty)
+        {
+            lowerBody.transform.LookAt(lowerBody.transform.position + input);
+            upperBody.transform.LookAt(lowerBody.transform.position + input);
+        }
+        else
+        {
+            lowerBody.transform.LookAt(lowerBody.transform.position + input);
+            upperBody.transform.LookAt(point);
+        }
     }
 }
