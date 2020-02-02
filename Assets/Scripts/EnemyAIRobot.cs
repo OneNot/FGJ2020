@@ -7,20 +7,30 @@ public class EnemyAIRobot : MonoBehaviour
 {
     public float MaxHealth;
     private float CurrentHealth;
+    public float DamagePerBite;
+    public float DamageCastWidth, DamageCastLength;
 
     private NavMeshAgent nma;
     private NavMeshObstacle navMeshObstacle;
     private GameObject playerGO;
+    private PlayerController playerController;
     private ParticleSystem particleSystem;
     private float timer;
+    private Transform damageCastOrigin;
+
+    public AudioClip impactDamage;
+    private AudioSource audioSource;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        damageCastOrigin = transform.Find("DamageCaster").transform;
         nma = GetComponent<NavMeshAgent>();
         navMeshObstacle = GetComponent<NavMeshObstacle>();
         particleSystem = GetComponentInChildren<ParticleSystem>();
         navMeshObstacle.enabled = false;
         playerGO = GameObject.FindGameObjectWithTag("Player");
+        playerController = playerGO.GetComponent<PlayerController>();
         CurrentHealth = MaxHealth;
     }
 
@@ -52,6 +62,7 @@ public class EnemyAIRobot : MonoBehaviour
         {
             particleSystem.Play();
             timer = Time.realtimeSinceStartup;
+            TryToDoDamage();
         }
     }
 
@@ -59,6 +70,7 @@ public class EnemyAIRobot : MonoBehaviour
     {
         CurrentHealth -= dmg;
         print("took " + dmg + "dmg");
+        audioSource.PlayOneShot(impactDamage, 0.6f);
         if(CurrentHealth <= 0f)
             Die();
 
@@ -67,5 +79,14 @@ public class EnemyAIRobot : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void TryToDoDamage()
+    {
+        Debug.DrawRay(damageCastOrigin.position, damageCastOrigin.forward * DamageCastLength, Color.green, 200f);
+        if(Physics.SphereCast(damageCastOrigin.position, DamageCastWidth, damageCastOrigin.forward, out RaycastHit hit, DamageCastLength, LayerMask.GetMask("Player")))
+        {
+            playerController.TakeDamage(DamagePerBite);
+        }
     }
 }

@@ -6,13 +6,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //todo: smoothing?
+    public float MaxHealth;
     public float MoveSpeed;
     public bool CanRun;
     public bool GravityOn;
 
+    private float CurrentHealth;
+
     private Transform upperBody, lowerBody;
     private SpriteRenderer lowerBodySR, upperBodySR;
     private CharacterController cc;
+
+    private AudioSource audioSource;
+    public float MeleeDamage;
+    public AudioClip MeleeSound;
+    public float MeleeReachForwards, MeleeReachWidth;
 
     public static Animator lb_animator, ub_animator;
     private float animationBaseSpeed;
@@ -33,6 +41,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        CurrentHealth = MaxHealth;
         upperBody = transform.Find("UpperBody");
         bulletSpawner = upperBody.GetComponentInChildren<BulletSpawner>();
         lowerBody = transform.Find("LowerBody");
@@ -60,6 +70,7 @@ public class PlayerController : MonoBehaviour
         AnimationChecks(moveInput.magnitude, shouldRun);
         LookAim(moveInput);
         WeaponFireChecks();
+        HealthCheck();
     }
 
     private void Move(Vector3 input, bool run)
@@ -119,7 +130,7 @@ public class PlayerController : MonoBehaviour
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
         point = new Vector3(point.x, transform.position.y, point.z);
 
-        Debug.DrawLine(Camera.main.transform.position, point, Color.red, 1f);
+        //Debug.DrawLine(Camera.main.transform.position, point, Color.red, 1f);
 
         
         if(UpperBodyMode == UpperBodyModes.Empty)
@@ -168,6 +179,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void TakeDamage(float dmg)
+    {
+        CurrentHealth -= dmg;
+        HealthCheck();
+        print("player took " + dmg + " dmg");
+    }
+
+    private void HealthCheck()
+    {
+        if(CurrentHealth <= 0f)
+            Die();
+    }
+    private void Die()
+    {
+        print("Death");
+    }
+
     private void NextWeapon()
     {
         //if last mode
@@ -197,5 +225,25 @@ public class PlayerController : MonoBehaviour
             bulletSpawner.transform.localPosition = new Vector3(1.7f, 0f, 11f);
         else if(mode == UpperBodyModes.Rifle)
             bulletSpawner.transform.localPosition = new Vector3(1.6f, 0f, 12.1f);
+    }
+
+    public void PlayMeleeSound()
+    {
+        audioSource.PlayOneShot(MeleeSound);
+    }
+
+    public void TryToDoMeleeDamage()
+    {
+
+        Debug.DrawRay(upperBody.position, upperBody.forward * MeleeReachForwards, Color.yellow, 200f);
+        if(Physics.SphereCast(upperBody.position, MeleeReachWidth, upperBody.forward, out RaycastHit hit, MeleeReachForwards, LayerMask.GetMask("Enemy")))
+        {
+            EnemyAIRobot robot = hit.transform.gameObject.GetComponentInParent<EnemyAIRobot>();
+            EnemyAI NotRobot = hit.transform.gameObject.GetComponentInParent<EnemyAI>();
+            if(robot != null)
+                robot.TakeDamage(MeleeDamage);
+            else if(NotRobot != null)
+                NotRobot.TakeDamage(MeleeDamage);
+        }
     }
 }
