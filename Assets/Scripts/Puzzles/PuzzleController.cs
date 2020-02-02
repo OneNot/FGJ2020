@@ -11,6 +11,8 @@ public class PuzzleController : MonoBehaviour
     public Puzzle activePuzzle;
     public GameObject notificationWindow;
 
+    public InteractableObj whoYouGonnaCall;
+
     public Puzzle FindPuzzle(int _puzzleID)
     {
         Puzzle puzzle = null;
@@ -25,8 +27,9 @@ public class PuzzleController : MonoBehaviour
         return puzzle;
     }
 
-    public void SetPuzzleActive(int _puzzleID, bool _activate = true)
+    public void SetPuzzleActive(int _puzzleID, bool _activate = true, InteractableObj _whoYouGonnaCall = null)
     {
+        whoYouGonnaCall = _whoYouGonnaCall;
         Puzzle p = FindPuzzle(_puzzleID);
 
         if (p != null)
@@ -43,6 +46,8 @@ public class PuzzleController : MonoBehaviour
         }
         else
             print("Puzzle " + _puzzleID + " not found");
+
+        
     }
 
     public void CloseCurrentPuzzle(bool _success = false, string _notificationText = "")
@@ -97,7 +102,7 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted.Add(p, false);
         }
 
-        SetPuzzleActive(1);
+        //SetPuzzleActive(1);
     }
 
     // Update is called once per frame

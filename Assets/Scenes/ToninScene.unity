@@ -5147,6 +5147,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2045275713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4479872131704096037, guid: 361aee45450962544acd10402f193338,
+    type: 3}
+  m_PrefabInstance: {fileID: 4479872131245618019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f81caa4af335564da2d159a7b71f29a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2109579305
 GameObject:
   m_ObjectHideFlags: 0
@@ -5464,6 +5476,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: joku_masiina
       objectReference: {fileID: 0}
+    - target: {fileID: 6425780648621484162, guid: 9c872bc413fd3944a93289d25e72a92f,
+        type: 3}
+      propertyPath: connectedDoor
+      value: 
+      objectReference: {fileID: 2045275713}
     - target: {fileID: 8374619140515245902, guid: 9c872bc413fd3944a93289d25e72a92f,
         type: 3}
       propertyPath: m_LocalPosition.x

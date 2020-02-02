@@ -12,6 +12,8 @@ public class InteractionCollider : MonoBehaviour
         interactableObj = GetComponentInParent<InteractableObj>();
     }
 
+    //TODO: FIX: if you go in with a weapon, changing to empty inside the trigger will not work. You need to ENTER the trigger empty handed
+
     private void OnTriggerEnter(Collider other)
     {
         PlayerController playerController = other.transform.GetComponent<PlayerController>();

@@ -22,6 +22,9 @@ public class Puzzle : MonoBehaviour
 
     public void SuccessEvent()
     {
+        if(PuzzleController.defaultInstance.whoYouGonnaCall != null)
+            PuzzleController.defaultInstance.whoYouGonnaCall.PuzzleFinished();
+
         switch (puzzleID)
         {
             case 0:
