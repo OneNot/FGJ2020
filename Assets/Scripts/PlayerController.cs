@@ -223,6 +223,9 @@ public class PlayerController : MonoBehaviour
     {
         print("Death");
         audioSource.PlayOneShot(DeathSounds[Random.Range(0, DeathSounds.Length-1)]);
+        lb_animator.SetBool("dead", true);
+        ub_animator.SetTrigger("Death");
+        ub_animator.SetBool("Dead", true);
         alive = false;
     }
 

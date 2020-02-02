@@ -48,4 +48,9 @@ public class AnimationEventHandler : MonoBehaviour
     {
         enemyAI.TryToDoDamage();
     }
+
+    public void ResetDeathTrigger()
+    {
+        ub_animator.ResetTrigger("Death");
+    }
 }
