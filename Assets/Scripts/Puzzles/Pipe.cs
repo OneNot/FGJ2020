@@ -21,9 +21,15 @@ public class Pipe : MonoBehaviour
     public bool poweredDown;
     public bool poweredLeft;
 
+    public Image coloredPart;
+
     public static List<Pipe> PoweredPipes = new List<Pipe>();
+    public static List<Pipe> PipesToReset = new List<Pipe>();
 
     public List<Pipe> goalNodes = new List<Pipe>();
+
+    [HideInInspector]
+    public Quaternion startRot;
 
     [HideInInspector]
     public PowerType goalPower;
@@ -33,6 +39,8 @@ public class Pipe : MonoBehaviour
         foreach(Pipe p in PoweredPipes)
         {
             p.powerType = PowerType.Unpowered;
+
+            p.UpdateColor(PowerType.Unpowered);
         }
 
         PoweredPipes.Clear();
@@ -40,18 +48,35 @@ public class Pipe : MonoBehaviour
 
     private void Start()
     {
+        startRot = gameObject.transform.rotation;
+        PipesToReset.Add(this);
         ResetPower();
         CheckPower();
-
-        if (pipeType == PipeType.PowerNode)
+        /*if (pipeType == PipeType.PowerNode)
         {
             UpdatePower();
+        }*/
+
+
+        foreach (Pipe p in powerNodes)
+        {
+            p.UpdatePower();
         }
+
         if (pipeType == PipeType.GoalNode)
         {
             goalPower = powerType;
             powerType = PowerType.Unpowered;
+            UpdateColor(goalPower);
         }
+
+        else if (pipeType == PipeType.PowerNode)
+        {
+            UpdateColor(powerType);
+        }
+
+        else
+            UpdateColor(powerType);
 
     }
 
@@ -85,12 +110,23 @@ public class Pipe : MonoBehaviour
 
     public void CheckSuccessCondition()
     {
+
         bool success = true;
 
         foreach(Pipe p in goalNodes)
         {
-            if (p.goalPower != p.powerType)
-                success = false;
+            if (p.powerType != p.goalPower && p.powerType != PowerType.Unpowered)
+            {
+                foreach(Pipe pp in PipesToReset)
+                {
+                    pp.transform.rotation = pp.startRot;
+                }
+                PipesToReset.Clear();
+                PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+            }
+
+            if(p.powerType != p.goalPower)
+            success = false;
         }
 
         if (success)
@@ -114,31 +150,31 @@ public class Pipe : MonoBehaviour
                 switch (gameObject.transform.rotation.eulerAngles.z)
                 {
                     case 0:
-                        poweredUp = false;
-                        poweredRight = true;
-                        poweredDown = false;
-                        poweredLeft = true;
+                        poweredUp = true;
+                        poweredRight = false;
+                        poweredDown = true;
+                        poweredLeft = false;
                         break;
 
                     case 90:
-                        poweredUp = true;
-                        poweredRight = false;
-                        poweredDown = true;
-                        poweredLeft = false;
-                        break;
-
-                    case 180:
                         poweredUp = false;
                         poweredRight = true;
                         poweredDown = false;
                         poweredLeft = true;
                         break;
 
-                    case 270:
+                    case 180:
                         poweredUp = true;
                         poweredRight = false;
                         poweredDown = true;
                         poweredLeft = false;
+                        break;
+
+                    case 270:
+                        poweredUp = false;
+                        poweredRight = true;
+                        poweredDown = false;
+                        poweredLeft = true;
                         break;
 
                     default:
@@ -149,11 +185,49 @@ public class Pipe : MonoBehaviour
             case PipeType.ThreeWay:
                 break;
             case PipeType.FourWay:
+                poweredUp = true;
+                poweredRight = true;
+                poweredDown = true;
+                poweredLeft = true;
                 break;
             case PipeType.CornerJ:
                 break;
             case PipeType.CornerL:
+                switch (gameObject.transform.rotation.eulerAngles.z)
+                {
+                    case 0:
+                        poweredUp = false;
+                        poweredRight = false;
+                        poweredDown = true;
+                        poweredLeft = true;
+                        break;
+
+                    case 90:
+                        poweredUp = false;
+                        poweredRight = true;
+                        poweredDown = true;
+                        poweredLeft = false;
+                        break;
+
+                    case 180:
+                        poweredUp = true;
+                        poweredRight = true;
+                        poweredDown = false;
+                        poweredLeft = false;
+                        break;
+
+                    case 270:
+                        poweredUp = true;
+                        poweredRight = false;
+                        poweredDown = false;
+                        poweredLeft = true;
+                        break;
+
+                    default:
+                        break;
+                }
                 break;
+
             case PipeType.GoalNode:
                 poweredUp = true;
                 poweredRight = true;
@@ -163,6 +237,44 @@ public class Pipe : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void UpdateColor(PowerType _powerType)
+    {
+        Color color = new Color();
+
+        switch (_powerType)
+        {
+            case PowerType.Unpowered:
+                color = new Color32(0, 0, 0, 0);
+                break;
+            case PowerType.Red:
+                color = Color.red;
+                break;
+            case PowerType.Green:
+                color = Color.green;
+                break;
+            case PowerType.Blue:
+                color = Color.blue;
+                break;
+            case PowerType.Yellow:
+                color = Color.yellow;
+                break;
+            case PowerType.Purple:
+                color = new Color32(128, 0, 128, 255);
+                break;
+            default:
+                break;
+        }
+
+        if(coloredPart != null)
+        {
+            coloredPart.color = color;
+        }
+
+        if (gameObject.GetComponent<Image>() != null && pipeType == PipeType.PowerNode || pipeType == PipeType.GoalNode)
+            gameObject.GetComponent<Image>().color = color;
+
     }
 
     public void UpdatePower(List<Pipe> _checkedPipes = null)
@@ -185,128 +297,165 @@ public class Pipe : MonoBehaviour
         List<Pipe> checkedPipes = _checkedPipes;
         checkedPipes.Add(this);
 
-        if (!alreadyChecked && this.pipeType != PipeType.GoalNode)
+
+        if (!alreadyChecked && this.pipeType != PipeType.GoalNode && powerType != PowerType.Unpowered)
         {
             CheckPower();
 
-            if (poweredUp)
+            if (poweredUp && pipeUp != null && pipeUp.pipeType != PipeType.PowerNode && pipeUp.poweredDown)
             {
                 Pipe pipeToCheck = pipeUp;
-                bool pipeChecked = false;
-                if (pipeToCheck != null)
+                pipeToCheck.CheckPower();
+                if(pipeToCheck.pipeType != PipeType.FourWay)
                 {
-                    pipeToCheck.CheckPower();
-
-                    foreach(Pipe p in checkedPipes)
+                    if(pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
                     {
-                        if (pipeToCheck == p)
-                            alreadyChecked = true;
-                    }
-                }
-
-
-                if (pipeToCheck != null && pipeToCheck.poweredDown && pipeToCheck.pipeType != PipeType.PowerNode && !pipeChecked)
-                {
-                    if (powerType != pipeToCheck.powerType || pipeToCheck.powerType == PowerType.Unpowered)
-                        pipeToCheck.powerType = powerType;
-                    else
+                        foreach (Pipe pp in PipesToReset)
+                        {
+                            pp.transform.rotation = pp.startRot;
+                        }
+                        PipesToReset.Clear();
                         PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
 
-                    if (powerType != PowerType.Unpowered)
-                        PoweredPipes.Add(pipeToCheck);
-
-                    pipeToCheck.UpdatePower(checkedPipes);         
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
+                    pipeToCheck.UpdatePower(checkedPipes);
                 }
+                else if(pipeToCheck.pipeUp != null && pipeToCheck.pipeUp.poweredDown)
+                {
+                    pipeToCheck = pipeToCheck.pipeUp;
+
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
+                    {
+                        foreach (Pipe pp in PipesToReset)
+                        {
+                            pp.transform.rotation = pp.startRot;
+                        }
+                        PipesToReset.Clear();
+                        PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
+
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
+                    pipeToCheck.UpdatePower(checkedPipes);
+                }
+
+                if (pipeToCheck.powerType != PowerType.Unpowered)
+                    PoweredPipes.Add(pipeToCheck);
             }
 
-            if (poweredRight)
+            if (poweredRight && pipeRight != null && pipeRight.pipeType != PipeType.PowerNode && pipeRight.poweredLeft)
             {
                 Pipe pipeToCheck = pipeRight;
-                bool pipeChecked = false;
-                if (pipeToCheck != null)
+                pipeToCheck.CheckPower();
+                if (pipeToCheck.pipeType != PipeType.FourWay)
                 {
-                    pipeToCheck.CheckPower();
-
-                    foreach (Pipe p in checkedPipes)
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
                     {
-                        if (pipeToCheck == p)
-                            alreadyChecked = true;
-                    }
-                }
-
-                if (pipeToCheck != null && pipeToCheck.poweredLeft && pipeToCheck.pipeType != PipeType.PowerNode && !pipeChecked)
-                {
-                    if (powerType != pipeToCheck.powerType || pipeToCheck.powerType == PowerType.Unpowered)
-                        pipeToCheck.powerType = powerType;
-                    else
+                        foreach (Pipe pp in PipesToReset)
+                        {
+                            pp.transform.rotation = pp.startRot;
+                        }
+                        PipesToReset.Clear();
                         PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
 
-                    if (powerType != PowerType.Unpowered)
-                        PoweredPipes.Add(pipeToCheck);
-
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
                     pipeToCheck.UpdatePower(checkedPipes);
                 }
+                else if (pipeToCheck.pipeRight != null && pipeToCheck.pipeRight.poweredLeft)
+                {
+                    pipeToCheck = pipeToCheck.pipeRight;
+
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
+                    {
+                        foreach (Pipe pp in PipesToReset)
+                        {
+                            pp.transform.rotation = pp.startRot;
+                        }
+                        PipesToReset.Clear();
+                        PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
+
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
+                    pipeToCheck.UpdatePower(checkedPipes);
+                }
+
+                if (pipeToCheck.powerType != PowerType.Unpowered)
+                    PoweredPipes.Add(pipeToCheck);
             }
 
-            if (poweredDown)
+            if (poweredDown && pipeDown != null && pipeDown.pipeType != PipeType.PowerNode && pipeDown.poweredUp)
             {
                 Pipe pipeToCheck = pipeDown;
-                bool pipeChecked = false;
-                if (pipeToCheck != null)
+                pipeToCheck.CheckPower();
+                if (pipeToCheck.pipeType != PipeType.FourWay)
                 {
-                    pipeToCheck.CheckPower();
-
-                    foreach (Pipe p in checkedPipes)
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
                     {
-                        if (pipeToCheck == p)
-                            alreadyChecked = true;
-                    }
-                }
-
-                if (pipeToCheck != null && pipeToCheck.poweredUp && pipeToCheck.pipeType != PipeType.PowerNode && !pipeChecked)
-                {
-                    if (powerType != pipeToCheck.powerType || pipeToCheck.powerType == PowerType.Unpowered)
-                        pipeToCheck.powerType = powerType;
-                    else
                         PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
 
-                    if (powerType != PowerType.Unpowered)
-                        PoweredPipes.Add(pipeToCheck);
-
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
                     pipeToCheck.UpdatePower(checkedPipes);
                 }
+                else if (pipeToCheck.pipeDown != null && pipeToCheck.pipeDown.poweredUp)
+                {
+                    pipeToCheck = pipeToCheck.pipeDown;
+
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
+                    {
+                        PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
+
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
+                    pipeToCheck.UpdatePower(checkedPipes);
+                }
+
+                if (pipeToCheck.powerType != PowerType.Unpowered)
+                    PoweredPipes.Add(pipeToCheck);
             }
 
-            if (poweredLeft)
+            if (poweredLeft && pipeLeft != null && pipeLeft.pipeType != PipeType.PowerNode && pipeLeft.poweredRight)
             {
                 Pipe pipeToCheck = pipeLeft;
-                bool pipeChecked = false;
-                if (pipeToCheck != null)
+                pipeToCheck.CheckPower();
+                if (pipeToCheck.pipeType != PipeType.FourWay)
                 {
-                    pipeToCheck.CheckPower();
-
-                    foreach (Pipe p in checkedPipes)
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
                     {
-                        if (pipeToCheck == p)
-                            alreadyChecked = true;
-                    }
-                }
-
-                if (pipeToCheck != null && pipeToCheck.poweredRight && pipeToCheck.pipeType != PipeType.PowerNode && !pipeChecked)
-                {
-                    if (powerType != pipeToCheck.powerType || pipeToCheck.powerType == PowerType.Unpowered)
-                        pipeToCheck.powerType = powerType;
-                    else
                         PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
 
-                    if (powerType != PowerType.Unpowered)
-                        PoweredPipes.Add(pipeToCheck);
-
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
                     pipeToCheck.UpdatePower(checkedPipes);
                 }
+                else if (pipeToCheck.pipeLeft != null && pipeToCheck.pipeLeft.poweredRight)
+                {
+                    pipeToCheck = pipeToCheck.pipeLeft;
+
+                    if (pipeToCheck.powerType != PowerType.Unpowered && powerType != PowerType.Unpowered && pipeToCheck.powerType != powerType)
+                    {
+                        PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Short circuit!");
+                    }
+
+                    pipeToCheck.powerType = powerType;
+                    pipeToCheck.UpdateColor(powerType);
+                    pipeToCheck.UpdatePower(checkedPipes);
+                }
+
+                if (pipeToCheck.powerType != PowerType.Unpowered)
+                    PoweredPipes.Add(pipeToCheck);
             }
 
         }
 
     }
+    
 }

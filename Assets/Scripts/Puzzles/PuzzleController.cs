@@ -101,6 +101,6 @@ public class PuzzleController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
-            CloseCurrentPuzzle(false, "Feilasit... Kyseessä on ilmiselvä L2P issue");
+            SetPuzzleActive(0);
     }
 }
