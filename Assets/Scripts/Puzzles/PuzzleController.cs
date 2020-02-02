@@ -54,24 +54,25 @@ public class PuzzleController : MonoBehaviour
 
     public void CloseCurrentPuzzle(bool _success = false, string _notificationText = "")
     {
-        if(_notificationText == "" && _success)
-        {
-            _notificationText = "Success!";
-        }
-        else if (_notificationText == "" && !_success)
-        {
-            _notificationText = "Failure!";
-        }
-
         if (activePuzzle != null)
         {
             SetPuzzleCompleted(activePuzzle.puzzleID, _success);
             activePuzzle.gameObject.SetActive(false);
 
-            notificationWindow.SetActive(true);
-            notificationWindow.GetComponentInChildren<Text>().text = _notificationText;
+            if (_notificationText != "")
+            {
+
+                notificationWindow.SetActive(true);
+                notificationWindow.GetComponentInChildren<Text>().text = _notificationText;
+            }
+
             playerController.enabled = true;
         }
+    }
+
+    public void CloseCurrentPuzzle_Button()
+    {
+        CloseCurrentPuzzle();
     }
 
     public bool PuzzleCompleted(int _puzzleID)
