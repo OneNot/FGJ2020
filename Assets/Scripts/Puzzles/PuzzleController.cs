@@ -82,6 +82,8 @@ public class PuzzleController : MonoBehaviour
         {
             puzzlesCompleted[FindPuzzle(_puzzleID)] = _completed;
         }
+
+        FindPuzzle(_puzzleID).SuccessEvent();
     }
 
     // Start is called before the first frame update
@@ -94,7 +96,7 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted.Add(p, false);
         }
 
-        //SetPuzzleActive(0);
+        SetPuzzleActive(1);
     }
 
     // Update is called once per frame

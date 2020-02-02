@@ -27,6 +27,9 @@ public class Puzzle : MonoBehaviour
             case 0:
                 print("puzzle onnistu jeeje");
                 break;
+            case 1:
+                print("puzzle2 onnistu jeeje");
+                break;
 
             default:
                 break;

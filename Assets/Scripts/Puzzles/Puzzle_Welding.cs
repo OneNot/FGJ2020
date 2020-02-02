@@ -11,13 +11,17 @@ public class Puzzle_Welding : MonoBehaviour
 
     public float damage = 0.1f;
     public float fuelConsumption = 0.1f;
-    public float percentageToWin = 90f;
+    public float percentageToWin = 0.95f;
 
     public Slider HPBar;
     public Slider FuelBar;
     public GameObject ps;
     public List<WeldingArea> weldingAreas = new List<WeldingArea>();
     public List<WeldingArea> weldedAreas = new List<WeldingArea>();
+
+
+    private float startingHealth;
+    private float startingFuel;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,9 @@ public class Puzzle_Welding : MonoBehaviour
         UpdateFuelBar();
         UpdateHPBar();
         UpdateWeldingAreas();
+
+        startingHealth = health;
+        startingFuel = fuel;
     }
 
     public void UpdateWeldingAreas()
@@ -34,13 +41,34 @@ public class Puzzle_Welding : MonoBehaviour
         foreach(WeldingArea w in gameObject.GetComponentsInChildren<WeldingArea>())
         {
             weldingAreas.Add(w);
-            print("added");
         }
+    }
+
+    public void ResetPuzzle()
+    {
+        SetBlowtorchCursor(false);
+        ps.gameObject.GetComponent<ParticleSystem>().Stop();
+;       health = startingHealth;
+        fuel = startingFuel;
+        weldedAreas.Clear();
+        foreach (WeldingArea w in weldingAreas)
+        {
+            Color waColor = w.gameObject.GetComponentInChildren<Image>().color;
+            w.gameObject.GetComponentInChildren<Image>().color = new Color(waColor.r, waColor.g, waColor.b, 0);
+        }
+        
     }
 
     public void CheckWin()
     {
-        print(weldedAreas.Count / weldingAreas.Count);
+        float percentage = (float)weldedAreas.Count / (float)weldingAreas.Count;
+        if(percentage >= percentageToWin)
+        {
+            ResetPuzzle();
+            PuzzleController.defaultInstance.SetPuzzleCompleted(PuzzleController.defaultInstance.activePuzzle.puzzleID);
+            PuzzleController.defaultInstance.CloseCurrentPuzzle(true, "Welding successful!");
+            SetBlowtorchCursor(false);
+        }
     }
 
     public void SetBlowtorchCursor(bool _active)
@@ -74,13 +102,21 @@ public class Puzzle_Welding : MonoBehaviour
                 UpdateHPBar();
             }
 
+            if (health <= 0 || fuel <= 0)
+            {
+                PuzzleController.defaultInstance.CloseCurrentPuzzle(false, "Welding failed");
+                ResetPuzzle();
+            }
+
             else if (WeldingArea.CurrentWeldingArea != null)
             {
                 Color waColor = WeldingArea.CurrentWeldingArea.gameObject.GetComponentInChildren<Image>().color;
                 WeldingArea.CurrentWeldingArea.gameObject.GetComponentInChildren<Image>().color = new Color(waColor.r, waColor.g, waColor.b, 255);
 
-                if(!weldedAreas.Contains(WeldingArea.CurrentWeldingArea.gameObject.GetComponent<WeldingArea>()))
-                weldedAreas.Add(WeldingArea.CurrentWeldingArea.gameObject.GetComponent<WeldingArea>());
+                if (!weldedAreas.Contains(WeldingArea.CurrentWeldingArea.gameObject.GetComponent<WeldingArea>()))
+                {
+                    weldedAreas.Add(WeldingArea.CurrentWeldingArea.gameObject.GetComponent<WeldingArea>());
+                }
 
                 CheckWin();
             }
@@ -93,5 +129,6 @@ public class Puzzle_Welding : MonoBehaviour
         {
             ps.GetComponent<ParticleSystem>().Stop();
         }
+
     }
 }

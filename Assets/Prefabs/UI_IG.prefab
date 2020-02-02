@@ -1469,9 +1469,9 @@ MonoBehaviour:
   blowTorchTexture: {fileID: 2800000, guid: cea3ba6a2ed1d704eaf6f90d83e2a1df, type: 3}
   health: 100
   fuel: 100
-  damage: 40
-  fuelConsumption: 6.5
-  percentageToWin: 90
+  damage: 55
+  fuelConsumption: 7.25
+  percentageToWin: 0.975
   HPBar: {fileID: 6167252450634263065}
   FuelBar: {fileID: 6167252451051468845}
   ps: {fileID: 6167252450750243717}
@@ -13784,6 +13784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzles:
   - {fileID: 6167252451265807924}
+  - {fileID: 6167252450106834505}
   activePuzzle: {fileID: 0}
   notificationWindow: {fileID: 6167252450114732700}
 --- !u!1 &6167252451051468847
