@@ -87,6 +87,8 @@ public class PasswordScroller : MonoBehaviour
 
     public void ResetPassword()
     {
+        password = "";
+
         for(int i = 0; i < passwordLength; i++)
         {
             if (!numbersOnly)
