@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InteractableObj : MonoBehaviour
 {
-    public DoorScript connectedDoor;
+    public GameObject connectedDoor;
 
     public void Interact()
     {
@@ -14,6 +14,7 @@ public class InteractableObj : MonoBehaviour
 
     public void PuzzleFinished()
     {
-        connectedDoor.OpenDoor();
+        //print("DOOR OPENING???");
+        connectedDoor.GetComponent<DoorScript>().OpenDoor();
     }
 }

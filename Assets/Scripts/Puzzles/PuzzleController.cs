@@ -109,6 +109,6 @@ public class PuzzleController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
-            SetPuzzleActive(1);
+            CloseCurrentPuzzle(true, "jippii");
     }
 }
