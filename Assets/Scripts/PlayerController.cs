@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip MeleeSound;
     public float MeleeReachForwards, MeleeReachWidth;
 
+    public float LowerSFXSoundLevel;
+
     public AudioClip[] DamageTakeSounds;
     public AudioClip[] DeathSounds;
 
@@ -27,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private float animationBaseSpeed;
 
     private bool alive;
+
+    public InteractableObj interactable {get; set;}
 
     public enum UpperBodyModes
     {
@@ -70,6 +74,11 @@ public class PlayerController : MonoBehaviour
             //todo: for controller we need to replace normalization
             Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")).normalized;
             bool shouldRun = CanRun && Input.GetButton("Run");
+
+            if(interactable != null && Input.GetButtonDown("Interact"))
+            {
+                interactable.Interact();
+            }
 
             WeaponSwitchChecks();
             Move(moveInput, shouldRun);
@@ -191,7 +200,7 @@ public class PlayerController : MonoBehaviour
         if(alive)
         {
             CurrentHealth -= dmg;
-            audioSource.PlayOneShot(DamageTakeSounds[Random.Range(0, DamageTakeSounds.Length-1)], 0.6f);
+            audioSource.PlayOneShot(DamageTakeSounds[Random.Range(0, DamageTakeSounds.Length-1)], LowerSFXSoundLevel);
             HealthCheck();
             print("player took " + dmg + " dmg");
         }
@@ -242,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayMeleeSound()
     {
-        audioSource.PlayOneShot(MeleeSound);
+        audioSource.PlayOneShot(MeleeSound, LowerSFXSoundLevel);
     }
 
     public void TryToDoMeleeDamage()

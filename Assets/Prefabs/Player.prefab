@@ -299,9 +299,23 @@ MonoBehaviour:
   CanRun: 1
   GravityOn: 1
   MeleeDamage: 5
-  MeleeSound: {fileID: 8300000, guid: 7bbe78dc2469ea842b44f191f82dbef0, type: 3}
+  MeleeSound: {fileID: 8300000, guid: 92e74a2dd23514545b8dd2412b4f47dd, type: 3}
   MeleeReachForwards: 5
   MeleeReachWidth: 13
+  LowerSFXSoundLevel: 0.6
+  DamageTakeSounds:
+  - {fileID: 8300000, guid: b843faa177019244f80941323d3e07f5, type: 3}
+  - {fileID: 8300000, guid: 028f774a0495c1d46a29445e45e8204b, type: 3}
+  - {fileID: 8300000, guid: aa3cc52ea32c82a449244013b75d3953, type: 3}
+  - {fileID: 8300000, guid: 1c4559d4d201ec44eb31a86ffd57697d, type: 3}
+  - {fileID: 8300000, guid: b3db2122dbf1ed249b2b6dba83473a8f, type: 3}
+  - {fileID: 8300000, guid: e4702e1d2ebe27e458705b785b6a1f5a, type: 3}
+  - {fileID: 8300000, guid: 739958e99e338f24c8385886d1d450fe, type: 3}
+  DeathSounds:
+  - {fileID: 8300000, guid: e36b829c8d3f8c140804503fc27d7759, type: 3}
+  - {fileID: 8300000, guid: 37af1e38e46264c498cbb2f9b149cca7, type: 3}
+  - {fileID: 8300000, guid: afbc45b127369e346bedd39837839c06, type: 3}
+  - {fileID: 8300000, guid: f23fdd205bbcd8f4987f89e10e23d816, type: 3}
 --- !u!143 &1257533514768463294
 CharacterController:
   m_ObjectHideFlags: 0
@@ -461,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 200
+  bulletLifetime: 2
   weapons:
   - name: pistol
     audio: {fileID: 8300000, guid: e3be5f5c386f402409d91ee4b610edaf, type: 3}
@@ -469,7 +484,7 @@ MonoBehaviour:
     maxFirerate: 0
     damage: 10
   - name: shotgun
-    audio: {fileID: 8300000, guid: 4e2dd359f1da45247b3bf4eb6f4c7aa2, type: 3}
+    audio: {fileID: 8300000, guid: 65f083d76aaad934c836cafc921cd380, type: 3}
     bulletPrefab: {fileID: 1251846748687091449, guid: ee412d9c804e14b41b8a77be9f3fce76,
       type: 3}
     maxFirerate: 0

@@ -16,6 +16,7 @@ public class BulletSpawner : MonoBehaviour
 {
     private AudioSource audioSource;
     public float bulletSpeed = 100f;
+    public float bulletLifetime;
     [SerializeField]
     public List<Weapon> weapons;
 
@@ -29,7 +30,7 @@ public class BulletSpawner : MonoBehaviour
         if(mode == PlayerController.UpperBodyModes.Pistol)
         {
             Weapon w = weapons.Find(x => x.name == "pistol");
-            Instantiate(w.bulletPrefab, transform.position, transform.rotation).GetComponent<BulletController>().SetParams(bulletSpeed, 5f, w.damage);
+            Instantiate(w.bulletPrefab, transform.position, transform.rotation).GetComponent<BulletController>().SetParams(bulletSpeed, bulletLifetime, w.damage);
             audioSource.PlayOneShot(w.audio);
         }
         else if(mode == PlayerController.UpperBodyModes.Shotgun)
@@ -39,14 +40,14 @@ public class BulletSpawner : MonoBehaviour
             {
                 Quaternion rot = transform.rotation;
                 rot = Quaternion.Euler(rot.eulerAngles.x, Random.Range(rot.eulerAngles.y - 15f, rot.eulerAngles.y + 15f), rot.eulerAngles.z);
-                Instantiate(w.bulletPrefab, transform.position, rot).GetComponent<BulletController>().SetParams(bulletSpeed, 5f, w.damage);
+                Instantiate(w.bulletPrefab, transform.position, rot).GetComponent<BulletController>().SetParams(bulletSpeed, bulletLifetime, w.damage);
             }  
             audioSource.PlayOneShot(w.audio);
         }
         if(mode == PlayerController.UpperBodyModes.Rifle)
         {
             Weapon w = weapons.Find(x => x.name == "rifle");
-            Instantiate(w.bulletPrefab, transform.position, transform.rotation).GetComponent<BulletController>().SetParams(bulletSpeed, 5f, w.damage);
+            Instantiate(w.bulletPrefab, transform.position, transform.rotation).GetComponent<BulletController>().SetParams(bulletSpeed, bulletLifetime, w.damage);
             audioSource.PlayOneShot(w.audio);
         }
     }
