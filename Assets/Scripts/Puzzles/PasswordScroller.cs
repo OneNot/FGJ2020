@@ -109,6 +109,7 @@ public class PasswordScroller : MonoBehaviour
         if(inputText.text.ToLower() == password.ToLower())
         {
             print("Password correct");
+            inputText.text = "";
             ResetPassword();
             PuzzleController.defaultInstance.CloseCurrentPuzzle(true, "Hacked!");
         }
