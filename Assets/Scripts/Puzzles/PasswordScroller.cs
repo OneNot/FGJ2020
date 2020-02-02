@@ -104,6 +104,13 @@ public class PasswordScroller : MonoBehaviour
         print(password);
     }
 
+    public void CloseTerminal()
+    {
+        inputText.text = "";
+        ResetPassword();
+        PuzzleController.defaultInstance.SetPuzzleActive(2, false);
+    }
+
     public void CheckPassword()
     {
         if(inputText.text.ToLower() == password.ToLower())
