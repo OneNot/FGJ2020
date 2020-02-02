@@ -21,7 +21,7 @@ public class InteractionCollider : MonoBehaviour
         {
             playerController.interactable = interactableObj;
             playerController.InteractPrompt.SetActive(true);
-            print("can interact");
+            //print("can interact");
         }
     }
 
@@ -29,7 +29,7 @@ public class InteractionCollider : MonoBehaviour
     {
         other.transform.GetComponent<PlayerController>().interactable = null;
         other.transform.GetComponent<PlayerController>().InteractPrompt.SetActive(false);
-        print("cannot interact");
+        //print("cannot interact");
     }
 
 }

@@ -82,7 +82,7 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         CurrentHealth -= dmg;
-        print("enemy took " + dmg + "dmg");
+        //print("enemy took " + dmg + "dmg");
         audioSource.PlayOneShot(impactDamage, 0.5f);
         if(CurrentHealth <= 0f)
             Die();

@@ -9,7 +9,7 @@ public class InteractableObj : MonoBehaviour
 
     public void Interact()
     {
-        print("INTERACT");
+        //print("INTERACT");
         PuzzleController.defaultInstance.SetPuzzleActive(PuzzleId, true, this);
     }
 

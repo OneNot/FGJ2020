@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemyHandler : MonoBehaviour
 {
     public List<GameObject> Levels;
+    public static EnemyHandler defaultInstance;
+
+    private void Awake()
+    {
+        defaultInstance = this;
+    }
 
     private void Start()
     {

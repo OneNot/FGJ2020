@@ -11,6 +11,8 @@ public class PuzzleController : MonoBehaviour
     public Puzzle activePuzzle;
     public GameObject notificationWindow;
 
+    private PlayerController playerController;
+
     public InteractableObj whoYouGonnaCall;
 
     public Puzzle FindPuzzle(int _puzzleID)
@@ -38,6 +40,7 @@ public class PuzzleController : MonoBehaviour
             if (_activate == true)
             {
                 activePuzzle = p;
+                playerController.enabled = false;
             }
             else if(activePuzzle == p)
             {
@@ -46,7 +49,6 @@ public class PuzzleController : MonoBehaviour
         }
         else
             print("Puzzle " + _puzzleID + " not found");
-
         
     }
 
@@ -68,6 +70,7 @@ public class PuzzleController : MonoBehaviour
 
             notificationWindow.SetActive(true);
             notificationWindow.GetComponentInChildren<Text>().text = _notificationText;
+            playerController.enabled = true;
         }
     }
 
@@ -92,9 +95,11 @@ public class PuzzleController : MonoBehaviour
         FindPuzzle(_puzzleID).SuccessEvent();
     }
 
+
     // Start is called before the first frame update
     void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
         defaultInstance = this;
 
         foreach (Puzzle p in puzzles)
@@ -102,13 +107,13 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted.Add(p, false);
         }
 
-        SetPuzzleActive(2);
+        // SetPuzzleActive(2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-            CloseCurrentPuzzle(true, "jippii");
+        // if (Input.GetKeyDown(KeyCode.P))
+        //     CloseCurrentPuzzle(true, "jippii");
     }
 }
