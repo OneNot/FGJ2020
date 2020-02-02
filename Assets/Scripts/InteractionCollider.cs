@@ -14,13 +14,19 @@ public class InteractionCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.transform.GetComponent<PlayerController>().interactable = interactableObj;
-        print("can interact");
+        PlayerController playerController = other.transform.GetComponent<PlayerController>();
+        if(playerController.UpperBodyMode == PlayerController.UpperBodyModes.Empty)
+        {
+            playerController.interactable = interactableObj;
+            playerController.InteractPrompt.SetActive(true);
+            print("can interact");
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         other.transform.GetComponent<PlayerController>().interactable = null;
+        other.transform.GetComponent<PlayerController>().InteractPrompt.SetActive(false);
         print("cannot interact");
     }
 

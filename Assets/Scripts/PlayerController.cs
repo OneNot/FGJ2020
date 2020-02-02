@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     public Slider HPSlider;
     public Text WeaponText;
+    public GameObject InteractPrompt;
 
     public InteractableObj interactable {get; set;}
 
@@ -44,13 +45,14 @@ public class PlayerController : MonoBehaviour
         Rifle
     }
 
-    private UpperBodyModes UpperBodyMode;
+    public UpperBodyModes UpperBodyMode {get; private set;}
 
     private BulletSpawner bulletSpawner;
 
     // Start is called before the first frame update
     void Awake()
     {
+        InteractPrompt.SetActive(false);
         alive = true;
         audioSource = GetComponent<AudioSource>();
         CurrentHealth = MaxHealth;
