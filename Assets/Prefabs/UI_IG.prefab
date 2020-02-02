@@ -12,6 +12,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3021879355555403628, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6167252451045544217}
+    - target: {fileID: 3021879355555403628, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseCurrentPuzzle_Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986477345482519426, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6167252451045544217}
+    - target: {fileID: 4986477345482519426, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseCurrentPuzzle_Button
+      objectReference: {fileID: 0}
     - target: {fileID: 5682978721176620640, guid: 44c78c07727fe1a4ca89f614c9842d64,
         type: 3}
       propertyPath: m_Name
@@ -112,5 +132,27 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6878578954799103291, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6167252451045544217}
+    - target: {fileID: 6878578954799103291, guid: 44c78c07727fe1a4ca89f614c9842d64,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseCurrentPuzzle_Button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44c78c07727fe1a4ca89f614c9842d64, type: 3}
+--- !u!114 &6167252451045544217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5682978721971556176, guid: 44c78c07727fe1a4ca89f614c9842d64,
+    type: 3}
+  m_PrefabInstance: {fileID: 1966811229281181257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2207f41d7d0f54bbdd95ecd917638c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
