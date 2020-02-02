@@ -27,15 +27,6 @@ public class DoorScript : MonoBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 70, 50, 30), "Door"))
-            if(open)
-                CloseDoor();
-            else
-                OpenDoor();
-    }
-
     IEnumerator CloseDoorCoRo()
     {
         while(transform.position.y > closedYPos)

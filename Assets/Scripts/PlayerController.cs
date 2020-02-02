@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     private float animationBaseSpeed;
 
     private bool alive;
+
+    public Slider HPSlider;
+    public Text WeaponText;
 
     public InteractableObj interactable {get; set;}
 
@@ -64,6 +67,7 @@ public class PlayerController : MonoBehaviour
         ub_animator.SetBool("ActionInProgress", false);
         animationBaseSpeed = MoveSpeed / 80f;
         lb_animator.speed = ub_animator.speed = animationBaseSpeed;
+        ChangeUpperBodyMode(UpperBodyMode);
     }
 
     // Update is called once per frame
@@ -208,6 +212,7 @@ public class PlayerController : MonoBehaviour
 
     private void HealthCheck()
     {
+        HPSlider.value = CurrentHealth / MaxHealth;
         if(alive && CurrentHealth <= 0f)
             Die();
     }
@@ -242,11 +247,28 @@ public class PlayerController : MonoBehaviour
 
         UpperBodyMode = mode;
         if(mode == UpperBodyModes.Pistol)
+        {
             bulletSpawner.transform.localPosition = new Vector3(0.2f, 0f, 11.5f);
+            WeaponText.text = "Pistol";
+        }
         else if(mode == UpperBodyModes.Shotgun)
+        {
             bulletSpawner.transform.localPosition = new Vector3(1.7f, 0f, 11f);
+            WeaponText.text = "Shotgun";
+        }
         else if(mode == UpperBodyModes.Rifle)
+        {
             bulletSpawner.transform.localPosition = new Vector3(1.6f, 0f, 12.1f);
+            WeaponText.text = "Rifle";
+        }
+        else if(mode == UpperBodyModes.Melee)
+        {
+            WeaponText.text = "Crowbar";
+        }
+        else
+        {
+            WeaponText.text = "Empty";
+        }
     }
 
     public void PlayMeleeSound()
