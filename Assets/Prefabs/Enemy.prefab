@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3180156348998545923}
   - component: {fileID: 3180156348998545935}
   - component: {fileID: 3180156348998545928}
-  - component: {fileID: 3180156348998545922}
+  - component: {fileID: 8112183155436471737}
   m_Layer: 10
   m_Name: collider
   m_TagString: Untagged
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   criticalArea: 0
---- !u!114 &3180156348998545922
+--- !u!114 &8112183155436471737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -803,7 +803,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
