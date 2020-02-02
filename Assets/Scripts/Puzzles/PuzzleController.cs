@@ -102,7 +102,7 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted.Add(p, false);
         }
 
-        //SetPuzzleActive(1);
+        SetPuzzleActive(2);
     }
 
     // Update is called once per frame
