@@ -15,7 +15,7 @@ public class InteractableObj : MonoBehaviour
 
     public void PuzzleFinished()
     {
-        //print("DOOR OPENING???");
-        connectedDoor.GetComponent<DoorScript>().OpenDoor();
+        if(connectedDoor != null)
+            connectedDoor.GetComponent<DoorScript>().OpenDoor();
     }
 }
