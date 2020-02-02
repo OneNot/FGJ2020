@@ -21,6 +21,8 @@ public class EnemyAI : MonoBehaviour
     public AudioClip[] BiteSounds;
     private AudioSource audioSource;
 
+    public GameObject Explode;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -89,6 +91,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
+        Instantiate(Explode, transform.position, Quaternion.Euler(90f, 0f, 0f));
         Destroy(gameObject);
     }
 

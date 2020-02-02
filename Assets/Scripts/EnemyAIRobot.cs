@@ -70,7 +70,7 @@ public class EnemyAIRobot : MonoBehaviour
     {
         CurrentHealth -= dmg;
         print("took " + dmg + "dmg");
-        audioSource.PlayOneShot(impactDamage, 0.6f);
+        audioSource.PlayOneShot(impactDamage, 0.5f);
         if(CurrentHealth <= 0f)
             Die();
 

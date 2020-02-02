@@ -9578,6 +9578,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: db38cf0460c922041a442d121aa11ff1, type: 3}
   - {fileID: 8300000, guid: e244e453dac65694aac2f6102d0501d0, type: 3}
   - {fileID: 8300000, guid: 6902b9cde1b834f47a28be1b42221883, type: 3}
+  Explode: {fileID: 2876654435786326368, guid: 07cb5e839fe292840979b84b56124c6b, type: 3}
 --- !u!208 &1446533800
 NavMeshObstacle:
   m_ObjectHideFlags: 0
