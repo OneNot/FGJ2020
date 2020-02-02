@@ -7,9 +7,11 @@ public class AnimationEventHandler : MonoBehaviour
     private Animator ub_animator;
     private EnemyAI enemyAI;
     private PlayerController playerController;
+    private AudioSource audioSource;
 
     private void Awake()
     {
+        audioSource = GetComponentInParent<AudioSource>();
         playerController = FindObjectOfType<PlayerController>();
         ub_animator = GetComponent<Animator>();
         enemyAI = GetComponentInParent<EnemyAI>();
@@ -36,6 +38,10 @@ public class AnimationEventHandler : MonoBehaviour
     public void ClearBiteTrigger()
     {
         ub_animator.ResetTrigger("bite");
+    }
+    public void BiteAudio()
+    {
+        audioSource.PlayOneShot(enemyAI.BiteSounds[Random.Range(0, enemyAI.BiteSounds.Length-1)], 0.3f);
     }
 
     public void TryToDoDamage()

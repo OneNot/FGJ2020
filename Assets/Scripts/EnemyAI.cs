@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     private Transform damageCastOrigin;
 
     public AudioClip impactDamage;
+    public AudioClip[] BiteSounds;
     private AudioSource audioSource;
 
     private void Awake()

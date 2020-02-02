@@ -222,6 +222,12 @@ MonoBehaviour:
   DamageCastWidth: 11
   DamageCastLength: 8
   impactDamage: {fileID: 8300000, guid: d7fbebb7fd1cf8d4991d586229615cd1, type: 3}
+  BiteSounds:
+  - {fileID: 8300000, guid: 393e14010458d064d813be6ea26d183d, type: 3}
+  - {fileID: 8300000, guid: 8abe5b89ee94232449bf219864ab1e4e, type: 3}
+  - {fileID: 8300000, guid: db38cf0460c922041a442d121aa11ff1, type: 3}
+  - {fileID: 8300000, guid: e244e453dac65694aac2f6102d0501d0, type: 3}
+  - {fileID: 8300000, guid: 6902b9cde1b834f47a28be1b42221883, type: 3}
 --- !u!208 &3180156349091590713
 NavMeshObstacle:
   m_ObjectHideFlags: 0

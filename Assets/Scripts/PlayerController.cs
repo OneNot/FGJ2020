@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -22,8 +20,13 @@ public class PlayerController : MonoBehaviour
     public AudioClip MeleeSound;
     public float MeleeReachForwards, MeleeReachWidth;
 
+    public AudioClip[] DamageTakeSounds;
+    public AudioClip[] DeathSounds;
+
     public static Animator lb_animator, ub_animator;
     private float animationBaseSpeed;
+
+    private bool alive;
 
     public enum UpperBodyModes
     {
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        alive = true;
         audioSource = GetComponent<AudioSource>();
         CurrentHealth = MaxHealth;
         upperBody = transform.Find("UpperBody");
@@ -61,16 +65,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //todo: for controller we need to replace normalization
-        Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")).normalized;
-        bool shouldRun = CanRun && Input.GetButton("Run");
+        if(alive)
+        {
+            //todo: for controller we need to replace normalization
+            Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")).normalized;
+            bool shouldRun = CanRun && Input.GetButton("Run");
 
-        WeaponSwitchChecks();
-        Move(moveInput, shouldRun);
-        AnimationChecks(moveInput.magnitude, shouldRun);
-        LookAim(moveInput);
-        WeaponFireChecks();
-        HealthCheck();
+            WeaponSwitchChecks();
+            Move(moveInput, shouldRun);
+            AnimationChecks(moveInput.magnitude, shouldRun);
+            LookAim(moveInput);
+            WeaponFireChecks();
+            HealthCheck();
+        }
     }
 
     private void Move(Vector3 input, bool run)
@@ -181,22 +188,28 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        CurrentHealth -= dmg;
-        HealthCheck();
-        print("player took " + dmg + " dmg");
+        if(alive)
+        {
+            CurrentHealth -= dmg;
+            audioSource.PlayOneShot(DamageTakeSounds[Random.Range(0, DamageTakeSounds.Length-1)], 0.3f);
+            HealthCheck();
+            print("player took " + dmg + " dmg");
+        }
     }
 
     private void HealthCheck()
     {
-        if(CurrentHealth <= 0f)
+        if(alive && CurrentHealth <= 0f)
             Die();
     }
     private void Die()
     {
         print("Death");
+        audioSource.PlayOneShot(DeathSounds[Random.Range(0, DeathSounds.Length-1)]);
+        alive = false;
     }
 
-    private void NextWeapon()
+    private void NextWeapon(  )
     {
         //if last mode
         if(UpperBodyMode == UpperBodyModes.Rifle)

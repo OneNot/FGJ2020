@@ -212,7 +212,7 @@ Transform:
   m_LocalScale: {x: 91.02173, y: 49.81, z: 34.94031}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 89.200005, z: -0.011000001}
 --- !u!1 &773295349
 GameObject:
@@ -305,7 +305,7 @@ Transform:
   m_LocalScale: {x: 91.02173, y: 49.81, z: 34.94031}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 89.200005, z: -0.011000001}
 --- !u!1 &804406697
 GameObject:
@@ -1370,6 +1370,76 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DeathSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5995d4aec8feb1045ad6fed1147899b6, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DeathSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e36b829c8d3f8c140804503fc27d7759, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DeathSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 37af1e38e46264c498cbb2f9b149cca7, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DeathSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: afbc45b127369e346bedd39837839c06, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DeathSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: f23fdd205bbcd8f4987f89e10e23d816, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: b843faa177019244f80941323d3e07f5, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 028f774a0495c1d46a29445e45e8204b, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: aa3cc52ea32c82a449244013b75d3953, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c4559d4d201ec44eb31a86ffd57697d, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: b3db2122dbf1ed249b2b6dba83473a8f, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: e4702e1d2ebe27e458705b785b6a1f5a, type: 3}
+    - target: {fileID: 1257533514768463292, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
+        type: 3}
+      propertyPath: DamageTakeSounds.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 739958e99e338f24c8385886d1d450fe, type: 3}
     - target: {fileID: 1257533514768463293, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
         type: 3}
       propertyPath: m_Name
@@ -1413,7 +1483,7 @@ PrefabInstance:
     - target: {fileID: 1257533514768463295, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257533514768463295, guid: 0f55398f3e0cb7c46bb60325a8a6d08c,
         type: 3}
