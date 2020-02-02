@@ -7,6 +7,7 @@ public class DoorScript : MonoBehaviour
     public float closedYPos, openedYPos;
     public bool open;
     public float DoorSpeed;
+    public int LevelToOpen;
 
     public void OpenDoor()
     {
@@ -15,6 +16,7 @@ public class DoorScript : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(OpenDoorCoRo());
             open = true;
+            FindObjectOfType<EnemyHandler>().ActivateLevelEnemies(LevelToOpen);
         }
     }
     public void CloseDoor()
