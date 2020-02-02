@@ -94,13 +94,13 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted.Add(p, false);
         }
 
-        SetPuzzleActive(0);
+        //SetPuzzleActive(0);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
-            SetPuzzleActive(0);
+            SetPuzzleActive(1);
     }
 }

@@ -131,6 +131,9 @@ public class Pipe : MonoBehaviour
 
         if (success)
         {
+            if(PuzzleController.defaultInstance.activePuzzle != null)
+            PuzzleController.defaultInstance.SetPuzzleCompleted(PuzzleController.defaultInstance.activePuzzle.puzzleID, true);
+
             PuzzleController.defaultInstance.CloseCurrentPuzzle(true, "Success! Jippii Wahuu");
         }
     }
