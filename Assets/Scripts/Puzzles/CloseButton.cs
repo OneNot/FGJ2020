@@ -18,6 +18,7 @@ public class CloseButton : MonoBehaviour
 
     public void ClosePuzzle()
     {
+        if(PuzzleController.defaultInstance.activePuzzle != null)
         PuzzleController.defaultInstance.SetPuzzleActive(PuzzleController.defaultInstance.activePuzzle.puzzleID, false);
     }
 }
