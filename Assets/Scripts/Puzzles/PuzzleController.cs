@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PuzzleController : MonoBehaviour
 {
     public List<Puzzle> puzzles = new List<Puzzle>();
-    private Dictionary<Puzzle, bool> puzzlesCompleted = new Dictionary<Puzzle, bool>();
+    public Dictionary<Puzzle, bool> puzzlesCompleted = new Dictionary<Puzzle, bool>();
     public static PuzzleController defaultInstance;
     public Puzzle activePuzzle;
     public GameObject notificationWindow;
@@ -83,6 +83,7 @@ public class PuzzleController : MonoBehaviour
             puzzlesCompleted[FindPuzzle(_puzzleID)] = _completed;
         }
 
+        if(_completed == true)
         FindPuzzle(_puzzleID).SuccessEvent();
     }
 

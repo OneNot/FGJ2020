@@ -47,8 +47,9 @@ public class Puzzle_Welding : MonoBehaviour
     public void ResetPuzzle()
     {
         SetBlowtorchCursor(false);
-        ps.gameObject.GetComponent<ParticleSystem>().Stop();
-;       health = startingHealth;
+        ps.GetComponent<ParticleSystem>().Clear();
+        ps.GetComponent<ParticleSystem>().Stop();
+        health = startingHealth;
         fuel = startingFuel;
         weldedAreas.Clear();
         foreach (WeldingArea w in weldingAreas)
@@ -121,8 +122,11 @@ public class Puzzle_Welding : MonoBehaviour
                 CheckWin();
             }
 
-            ps.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-            ps.GetComponent<ParticleSystem>().Play();
+            if (PuzzleController.defaultInstance.puzzlesCompleted[PuzzleController.defaultInstance.activePuzzle] == false)
+            {
+                ps.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+                ps.GetComponent<ParticleSystem>().Play();
+            }
         }
 
         if (Input.GetButtonUp("Fire1") || fuel <= 0)
