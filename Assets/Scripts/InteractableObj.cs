@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class InteractableObj : MonoBehaviour
 {
+    public int PuzzleId;
     public GameObject connectedDoor;
 
     public void Interact()
     {
         print("INTERACT");
-        PuzzleController.defaultInstance.SetPuzzleActive(0, true, this);
+        PuzzleController.defaultInstance.SetPuzzleActive(PuzzleId, true, this);
     }
 
     public void PuzzleFinished()
