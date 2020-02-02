@@ -41,7 +41,7 @@ public class AnimationEventHandler : MonoBehaviour
     }
     public void BiteAudio()
     {
-        audioSource.PlayOneShot(enemyAI.BiteSounds[Random.Range(0, enemyAI.BiteSounds.Length-1)], 0.3f);
+        audioSource.PlayOneShot(enemyAI.BiteSounds[Random.Range(0, enemyAI.BiteSounds.Length-1)], 0.6f);
     }
 
     public void TryToDoDamage()

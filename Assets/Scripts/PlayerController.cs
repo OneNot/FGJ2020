@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
         if(alive)
         {
             CurrentHealth -= dmg;
-            audioSource.PlayOneShot(DamageTakeSounds[Random.Range(0, DamageTakeSounds.Length-1)], 0.3f);
+            audioSource.PlayOneShot(DamageTakeSounds[Random.Range(0, DamageTakeSounds.Length-1)], 0.6f);
             HealthCheck();
             print("player took " + dmg + " dmg");
         }
